@@ -49,23 +49,28 @@ func stringToInt(s string) int {
 	return number
 }
 
-func stringSlicer() []searchTerms{
+func stringSlicer() []searchTerms {
 
-	var sample string = "8-13 v: mtjkbnvvvhvvv"
+	samples := []string{"8-13 v: mtjkbnvvvhvvv", "8-14 k: xnjcftlkvhkmkr", "2-8 v: jvvvvvvjv"}
 
-	pwString := strings.Split(sample, " ")
-	targetLetter := strings.TrimRight(pwString[1], ":")
-	numbers := strings.Split(pwString[0], "-")
+	var searchSlice []searchTerms
 
-	var testStruct searchTerms
-	testStruct.lowNum = stringToInt(numbers[0])
-	testStruct.highNum = stringToInt(numbers[1])
-	testStruct.targetLetter = targetLetter
-	testStruct.password = pwString[2]
-	fmt.Println(testStruct)
+	for _, sample := range samples {
+		pwString := strings.Split(sample, " ")
+		targetLetter := strings.TrimRight(pwString[1], ":")
+		numbers := strings.Split(pwString[0], "-")
 
-	testy := []searchTerms{{7 17 w sqmbczwtwpwkhngtw}, {8 13 v mtjkbnvvvhvvv}} 
-	return testy
+		var tempStruct searchTerms
+		tempStruct.lowNum = stringToInt(numbers[0])
+		tempStruct.highNum = stringToInt(numbers[1])
+		tempStruct.targetLetter = targetLetter
+		tempStruct.password = pwString[2]
+
+		searchSlice = append(searchSlice, tempStruct)
+
+	}
+
+	return searchSlice
 
 }
 
@@ -91,6 +96,5 @@ func main() {
 		}
 
 	}
-	// parser()
-	stringSlicer()
+	fmt.Println(stringSlicer())
 }
