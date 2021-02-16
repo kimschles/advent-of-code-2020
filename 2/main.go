@@ -75,26 +75,31 @@ func stringSlicer() []searchTerms {
 }
 
 func main() {
-	testMap := []string{"hjujj", "njnnn"}
-	var targetLetter string = "j"
-	var lowNum int = 3
-	var highNum int = 4
-	var letterMap = map[string]int{}
-	var correctPassCount int
+	pwMap := stringSlicer()
+	for _, item := range pwMap {
+		var targetLetter string = item.targetLetter
+		var lowNum int = item.lowNum
+		var highNum int = item.highNum
+		var password string = item.password
+		var letterMap = map[string]int{}
+		var correctPassCount int
 
-	for _, pw := range testMap {
+		for _, pw := range password {
 
-		// count the number of times each letter is present in the string
-		// store the count in a map
-		for _, character := range pw {
-			letterMap[string(character)]++
+			// count the number of times each letter is present in the string
+			// store the count in a map
+
+			for _, character := range strconv.QuoteRune(pw) {
+				letterMap[string(character)]++
+
+				//check if the number of the targetLetter is within the range
+				if letterMap[targetLetter] >= lowNum && letterMap[targetLetter] <= highNum {
+					correctPassCount++
+				}
+
+			}
+
 		}
-
-		//check if the number of the targetLetter is within the range
-		if letterMap[targetLetter] >= lowNum && letterMap[targetLetter] <= highNum {
-			correctPassCount++
-		}
-
 	}
-	fmt.Println(stringSlicer())
+
 }
