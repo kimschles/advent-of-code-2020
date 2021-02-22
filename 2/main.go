@@ -78,33 +78,22 @@ func main() {
 	pwMap := stringSlicer()
 
 	for _, item := range pwMap {
-		// var targetLetter string = item.targetLetter
+		var targetLetter string = item.targetLetter
 		var lowNum int = item.lowNum
 		var highNum int = item.highNum
 		var password string = item.password
-		var letterMap = map[rune]int{}
-		// var correctPassCount int
+		var letterMap = map[string]int{}
+		var correctPassCount int
 
 		for _, char := range password {
-			letterMap[char]++
+			letterMap[string(char)]++
 		}
 
-		fmt.Println(letterMap[98])
-		fmt.Println(letterMap, lowNum, highNum)
+		if letterMap[targetLetter] > lowNum && letterMap[targetLetter] < highNum {
+			correctPassCount++
+		}
 
-		// count, ok := letterMap["v"]
-		// if ok {
-		// 	fmt.Printf("TargetLetter has a count of %d\n", count)
-		// } else {
-		// 	fmt.Println("TargetLetter was not found")
-		// }
-
-		// the requested key is missing and returning 0
-
-		// if letterMap[targetLetter] > lowNum && letterMap[targetLetter] < highNum {
-		// 	correctPassCount++
-		// }
-
+		fmt.Println(correctPassCount)
 	}
 
 }
