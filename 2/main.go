@@ -9,9 +9,9 @@ import (
 	"strings"
 )
 
-func readFile() {
+func readFile() []string {
 	// Open the data file for reading
-	file, err := os.Open("smol-pw.txt")
+	file, err := os.Open("passwords.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -19,9 +19,11 @@ func readFile() {
 	// create a new scanner for the file
 	scanner := bufio.NewScanner(file)
 
+	var dataFromFile []string
+
 	// loops until the end of the file is reached and scanner.Scan returns false
 	for scanner.Scan() {
-		fmt.Printf("%T\n", scanner.Text())
+		dataFromFile = append(dataFromFile, scanner.Text())
 	}
 
 	// If there was an error scanning the file, report it and exit
@@ -31,6 +33,8 @@ func readFile() {
 
 	// Close the file to free resources
 	err = file.Close()
+
+	return dataFromFile
 
 }
 
@@ -50,8 +54,7 @@ func stringToInt(s string) int {
 }
 
 func stringSlicer() []searchTerms {
-
-	samples := []string{"8-13 v: mtjkbnvvvhvvv", "8-14 k: xnjcftlkvhkmkr", "2-8 v: jvvvvvvjv"}
+	samples := readFile()
 
 	var searchSlice []searchTerms
 
@@ -75,15 +78,16 @@ func stringSlicer() []searchTerms {
 }
 
 func main() {
+	var correctPassCount int
 	pwMap := stringSlicer()
 
 	for _, item := range pwMap {
+
 		var targetLetter string = item.targetLetter
 		var lowNum int = item.lowNum
 		var highNum int = item.highNum
 		var password string = item.password
 		var letterMap = map[string]int{}
-		var correctPassCount int
 
 		for _, char := range password {
 			letterMap[string(char)]++
@@ -93,7 +97,6 @@ func main() {
 			correctPassCount++
 		}
 
-		fmt.Println(correctPassCount)
 	}
-
+	fmt.Println(correctPassCount)
 }
